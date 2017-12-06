@@ -25,7 +25,7 @@ Getting started with this MPESA library is very easy.
 	* Response.php
 	* cert.cr
 
-* You can download a zip of all file (including the license and this README file) from https://github.com/ModoPesa/mpesa-php and extract it somewhere/anywhere in your app directory. Make sure all three files are in the same directory.
+* You can download a zip of all file (including the license and this README file) from https://github.com/ModoPesa/mpesa-php/archive/v0.17.12.07.zip and extract it somewhere/anywhere in your app directory. Make sure all three files are in the same directory.
 
 ## Usage
 Define some basic constants, either in your app/website's configuration or at the top of the script including the MPESA Class file like so:
