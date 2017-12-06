@@ -1,4 +1,4 @@
-                                        _
+                                       _
 		______   ____    _________| |   _______	   _______      _______	   ______
 		|   _ \_/_   | 	|           |  |   __  \   |   ____|  /   ____|   /  __  \
 		|  | |  | |  | 	|           |  |  |  |  |  |       |  |       |  |  |  |
@@ -12,7 +12,8 @@
 				|___________|
 						
 # ModoPesa MPESA - PHP
-A set of Libraries for integrating MPESA into Websites/Web Apps written in Vanilla PHP.
+A simple and concise library for integrating MPESA into Websites/Web Apps written in Vanilla PHP.
+Based on Daraja - the new MPESA API(https://developer.safaricom.co.ke/docs/)
 
 ## Installation
 Getting started with MPESA is very easy.
