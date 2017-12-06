@@ -43,14 +43,10 @@ Define some basic constants, either in your app/website's configuration or at th
 	define( 'MPESA_CONFIRMATION_URL', 'https://yoursite.tld/confirm' );
 	define( 'MPESA_VALIDATION_URL', 'https://yoursite.tld/validate' );
 
-Load the class...
+Load and instantiate the MPESA object like so:
 
 	<?php
 	require_once( 'MPESA.php');
-
-Then instantiate the MPESA object like so:
-
-	<?php
 	$mpesa = new \Safaricom\MPESA();
 
 Or, if you are not live yet or you are testing in a sandbox environment, pass `false` as an argument when instantiating the MPESA object, like so:

@@ -135,13 +135,13 @@ class MPESA
 
         $curl_response = curl_exec( $curl );
 
-        return json_decode( $curl_response)->access_token;
+        return json_decode( $curl_response) -> access_token;
     }
 
     /**
      *  Whenever M-Pesa receives a transaction on the shortcode, M-Pesa triggers a validation request against the validation URL and the 3rd party system responds to M-Pesa with a validation response (either a success or an error code).
      **/
-    public function registerUrl()
+    public function register()
     {
         $url = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl';
 
@@ -275,11 +275,10 @@ class MPESA
      * @param $Remarks - Comments that are sent along with the transaction.
      * @param $AccountReference - Account Reference mandatory for “BusinessPaybill” CommandID.
      * @param $commandID - Unique command for each transaction - BusinessPayBill | MerchantToMerchantTransfer | MerchantTransferFromMerchantToWorking |  MerchantServicesMMFAccountTransfer |  AgencyFloatAdvance
-     * @param $SenderIdentifierType - Type of organization sending the transaction - MSISDN | Till Number | Shortcode
      * @param $RecieverIdentifierType - Type of organization receiving the funds being transacted - MSISDN | Till Number | Shortcode
      * @return mixed-string
      */
-    public function b2b( $Amount, $PartyB, $Remarks, $AccountReference, $commandID, $SenderIdentifierType, $RecieverIdentifierType )
+    public function b2b( $Amount, $PartyB, $Remarks, $AccountReference, $commandID, $RecieverIdentifierType )
     {
         if( $this -> live ){
             $url = 'https://api.safaricom.co.ke/mpesa/b2b/v1/paymentrequest';
@@ -400,7 +399,7 @@ class MPESA
         curl_setopt( $curl, CURLOPT_HEADER, false );
         $curl_response = curl_exec( $curl );
 
-        return json_decode( $curl_response );
+        echo( $curl_response );
     }
 
     /**
