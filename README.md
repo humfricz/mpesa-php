@@ -33,9 +33,11 @@ Define some basic constants, either in your app/website's configuration or at th
 	<?php
 	define( 'MPESA_NAME', 'Your Awesome Business' );
 	define( 'MPESA_SHORTCODE', '123456' );
+	define( 'MPESA_ID_TYPE', 'MSISDN|Till Number|Shortcode' );
 	define( 'MPESA_KEY', 'Daraja App Key' );
 	define( 'MPESA_SECRET', 'Daraja App Secret' );
-	define( 'MPESA_PASSWORD', 'Your MPESA Gateway Password' );
+    define( 'MPESA_USERNAME', 'Your MPESA Web Portal Username' );
+	define( 'MPESA_PASSWORD', 'Your MPESA Web Portal Password' );
 	define( 'MPESA_TIMEOUT_URL', 'https://yoursite.tld/timeout/' );
 	define( 'MPESA_RESULT_URL', 'https://yoursite.tld/mpesa/' );
 	define( 'MPESA_CONFIRMATION_URL', 'https://yoursite.tld/confirm' );

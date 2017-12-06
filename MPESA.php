@@ -23,7 +23,10 @@ class MPESA
     // Daraja appsecret
     private $consumer_secret;
 
-    // MPESA portal password
+    // MPESA web portal username
+    private $username;
+
+    // MPESA web portal password
     private $password;
 
     // The path to MPESA Public Key (the cert.cr file )
@@ -53,8 +56,10 @@ class MPESA
     {
         $this -> business = MPESA_NAME;
         $this -> shortcode = MPESA_SHORTCODE;
+        $this -> type = MPESA_ID_TYPE;
         $this -> key = MPESA_KEY;
         $this -> secret = MPESA_SECRET;
+        $this -> username = MPESA_USERNAME;
         $this -> password = MPESA_PASSWORD;
         $this -> publicKey = $public_key;
         $this -> timeout_url = MPESA_TIMEOUT_URL;
@@ -168,7 +173,7 @@ class MPESA
      * REVERSAL API 
      * Use this function to initiate a reversal request
      * @param $CommandID - Takes only 'TransactionReversal' Command id
-     * @param $Initiator - The name of Initiator to initiating  the request
+     * @param $this -> username - The name of Initiator to initiating  the request
      * @param $TransactionID - Organization Receiving the funds
      * @param $Amount - Amount
      * @param $ReceiverParty - Organization /MSISDN sending the transaction
@@ -191,7 +196,6 @@ class MPESA
 
         curl_setopt( $curl, CURLOPT_URL, $url);
         curl_setopt( $curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Authorization:Bearer '.$token));
-
 
         $curl_post_data = array(
             'CommandID' => 'TransactionReversal',
@@ -225,7 +229,7 @@ class MPESA
      * @param $Occasion -   Optional
      * @return string
      */
-    public function b2c( $CommandID, $Amount, $PartyB, $Remarks, $Occasion = "" )
+    public function b2c( $CommandID, $Amount, $PartyB, $Remarks = "", $Occasion = "" )
     {
         if( $this -> live ){
             $url = 'https://api.safaricom.co.ke/mpesa/b2c/v1/paymentrequest';
@@ -240,7 +244,7 @@ class MPESA
         curl_setopt( $curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Authorization:Bearer '.$token)); 
 
         $curl_post_data = array(
-            'InitiatorName' => $InitiatorName,
+            'InitiatorName' => $this -> username,
             'SecurityCredential' => $this -> securityCredential(),
             'CommandID' => $CommandID ,
             'Amount' => $Amount,
@@ -289,10 +293,10 @@ class MPESA
         curl_setopt( $curl, CURLOPT_URL, $url);
         curl_setopt( $curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Authorization:Bearer '.$token));
         $curl_post_data = array(
-            'Initiator' => $Initiator,
+            'Initiator' => $this -> username,
             'SecurityCredential' => $this -> securityCredential(),
             'CommandID' => $commandID,
-            'SenderIdentifierType' => $SenderIdentifierType,
+            'SenderIdentifierType' => $this -> type,
             'RecieverIdentifierType' => $RecieverIdentifierType,
             'Amount' => $Amount,
             'PartyA' => $this -> shortcode,
@@ -332,7 +336,9 @@ class MPESA
 
         $curl = curl_init();
         curl_setopt( $curl, CURLOPT_URL, $url);
-        curl_setopt( $curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Authorization:Bearer '.$token));
+        curl_setopt( 
+          $curl, 
+          CURLOPT_HTTPHEADER, ['Content-Type:application/json','Authorization:Bearer '.$token] );
 
         $curl_post_data = array(
             'ShortCode' => $this -> shortcode,
@@ -373,12 +379,11 @@ class MPESA
 
         $curl = curl_init();
         curl_setopt( $curl, CURLOPT_URL, $url);
-        curl_setopt( $curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Authorization:Bearer '.$token)); //setting custom header
-
+        curl_setopt( $curl, CURLOPT_HTTPHEADER, ['Content-Type:application/json','Authorization:Bearer '.$token] ); 
 
         $curl_post_data = array(
             'CommandID' => $CommandID,
-            'Initiator' => $Initiator,
+            'Initiator' => $this -> username,
             'SecurityCredential' => $this -> securityCredential(),
             'PartyA' => $this -> shortcode,
             'IdentifierType' => $IdentifierType,
@@ -400,7 +405,7 @@ class MPESA
 
     /**
      * Use this function to make a transaction status request
-     * @param $Initiator - The name of Initiator to initiating the request.
+     * @param $this -> username - The name of Initiator to initiating the request.
      * @param $CommandID - Unique command for each transaction type, possible values are: TransactionStatusQuery.
      * @param $TransactionID - Organization Receiving the funds.
      * @param $IdentifierType - Type of organization receiving the transaction
@@ -408,7 +413,7 @@ class MPESA
      * @param $Occasion -   Optional Parameter
      * @return mixed-string
      */
-    public function status( $CommandID, $TransactionID, $IdentifierType, $Remarks, $Occasion )
+    public function status( $TransactionID, $Initiator = null, $IdentifierType = null, $CommandID = "TransactionStatusQuery", $Remarks = "", $Occasion = "" )
     {
         if( $this -> live ){
             $url = 'https://api.safaricom.co.ke/mpesa/transactionstatus/v1/query';
@@ -420,9 +425,10 @@ class MPESA
 
         $curl = curl_init();
         curl_setopt( $curl, CURLOPT_URL, $url);
-        curl_setopt( $curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Authorization:Bearer '.$token)); //setting custom header
+        curl_setopt( $curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Authorization:Bearer '.$token));
 
-
+        $Initiator = is_null( $Initiator ) ? $this -> username : $Initiator;
+        $IdentifierType = is_null( $IdentifierType ) ? $this -> type : $IdentifierType
         $curl_post_data = array(
             'Initiator' => $Initiator,
             'SecurityCredential' => $this -> securityCredential(),
@@ -444,7 +450,7 @@ class MPESA
         curl_setopt( $curl, CURLOPT_HEADER, false );
         $curl_response = curl_exec( $curl );
 
-        return json_decode( $curl_response );
+        echo ( $curl_response );
     }
 
     /**
@@ -457,7 +463,7 @@ class MPESA
      * @param $Remark - Remarks
      * @return mixed-string
      */
-    public function payBill( $Amount, $PhoneNumber, $AccountReference, $TransactionDesc, $Remarks = "" )
+    public function pay( $Amount, $PhoneNumber, $AccountReference = "", $TransactionDesc = "", $Remarks = "" )
     {
         if( $this -> live ){
             $url = 'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
@@ -467,12 +473,12 @@ class MPESA
             $token = $this -> sandBoxToken();
         }
 
-        $timestamp = date("yymmddhhiiss");
+        $timestamp = date("yyyymmddhhiiss");
         $password = base64_encode( $this -> shortcode.$this -> password.$timestamp );
 
         $curl = curl_init();
         curl_setopt( $curl, CURLOPT_URL, $url);
-        curl_setopt( $curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Authorization:Bearer '.$token));
+        curl_setopt( $curl, CURLOPT_HTTPHEADER, ['Content-Type:application/json','Authorization:Bearer '.$token] );
 
 
         $curl_post_data = array(
@@ -506,7 +512,7 @@ class MPESA
      * @param $checkoutRequestID - Checkout RequestID
      * @return mixed-string
      */
-    public function STKPushQuery( $checkoutRequestID )
+    public function stkpush( $checkoutRequestID )
     {
         if( $this -> live ){
             $url = 'https://api.safaricom.co.ke/mpesa/stkpushquery/v1/query';
@@ -519,13 +525,13 @@ class MPESA
         $curl = curl_init();
         curl_setopt( $curl, CURLOPT_URL, $url);
         curl_setopt( $curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Authorization:Bearer '.$token));
-        $timestamp = date("Ymdhis");
+        $timestamp = date("yyyymmddhhiiss");
         $password = base64_encode( $this -> shortcode.$this -> password.$timestamp );
 
         $curl_post_data = array(
             'BusinessShortCode' => $this -> shortcode,
             'Password' => $password,
-            'Timestamp' => date('ymdhis'),
+            'Timestamp' => $timestamp,
             'CheckoutRequestID' => $checkoutRequestID
         );
 
