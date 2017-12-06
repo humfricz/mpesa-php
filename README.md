@@ -25,7 +25,7 @@ Getting started with this MPESA library is very easy.
 	* Response.php
 	* cert.cr
 
-* You can download a zip of all three from here(https://github.com/ModoPesa/mpesa-php) and extract it somewhere/anywhere in your app directory. Make sure all three files are in the same directory.
+* You can download a zip of all three from https://github.com/ModoPesa/mpesa-php and extract it somewhere/anywhere in your app directory. Make sure all three files are in the same directory.
 
 ## Usage
 Define some basic constants required by the MPESA Class file like so:
@@ -48,7 +48,7 @@ Then instantiate the MPESA object like so:
 
 	$mpesa = new \Safaricom\MPESA();
 
-Or, if you are not live yet or you are testing in a sandbox environment, pass false as an argument when instantiating the MPESA object, like so:
+Or, if you are not live yet or you are testing in a sandbox environment, pass `false` as an argument when instantiating the MPESA object, like so:
 
 	$mpesa = new \Safaricom\MPESA(false);
 
@@ -60,7 +60,7 @@ Or, if you are not live yet or you are testing in a sandbox environment, pass fa
 		$CommandID 
 		);
 
-The last two arguments are optional. The `$BillRefNumber` defaults to nothing ("") while `$CommandID` defaults to "CustomerPayBillOnline"
+The last two arguments are optional. The `$BillRefNumber` defaults to nothing (`""`) while `$CommandID` defaults to "CustomerPayBillOnline"
 
 ### Business To Business(B2B) Transactions
 	$mpesa -> b2b( 
@@ -110,16 +110,15 @@ The `$Remarks` are optional.
 		$Occasion 
 		);
 
-To get responses, just call the response class at your endpoints. This utility class will handle responses from Safaricom MPESA and return the parameters as its properties.
+### Process Responses
+This utility class will handle responses from Safaricom MPESA sent to your endpoints and return the parameters as its properties. Just use this code at your endpoint, where `$type` is the kind of request for whose response to listen for. 
 
 	$response = new \Safaricom\Response($type);
 
-Where $type is the kind of request for whose response to listen for. Your `$response` object will hold all the parameters, which you can retrieve like so:
+Your `$response` object will hold, as properties, all the parameters, which you can retrieve like so:
 
 	$amount = $response -> Amount;
 	$phone = $response -> Phone;
-
-You can get all other response parameters/information as above.
 
 ### Validating/Confirming Transactions
 	$response = new \Safaricom\Response('validation');
@@ -135,4 +134,4 @@ Or reject like so :
 If you do not wish to validate/confirm your transactions, you still need to call `$mpesa -> finish();` at your validation/confirmation endpoints, so MPESA is notified to process the transaction.
 
 ## Acknowledgements
-* MPESA and the MPESA Logo are registered trademarks of Safaricom Ltd
+* MPESA and the MPESA Logo are registered trademarks of Safaricom Ltd - https://safaricom.co.ke
