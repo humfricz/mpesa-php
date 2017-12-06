@@ -176,7 +176,7 @@ class MPESA
      * @param $Occasion -   Optional Parameter
      * @return mixed-string
      */
-    public function reversal( $TransactionID, $Amount, $ReceiverParty, $RecieverIdentifierType, $Remarks, $Occasion )
+    public function reverse( $TransactionID, $Amount, $ReceiverParty, $RecieverIdentifierType, $Remarks, $Occasion )
     {
         if( $this -> live ){
             $url = 'https://api.safaricom.co.ke/mpesa/reversal/v1/request';
@@ -359,7 +359,7 @@ class MPESA
      * @param $Remarks - Comments that are sent along with the transaction.
      * @return mixed-string
      */
-    public function accountBalance( $CommandID, $IdentifierType, $Remarks )
+    public function balance( $CommandID, $IdentifierType, $Remarks = "" )
     {
         if( $this -> live ){
             $url = 'https://api.safaricom.co.ke/mpesa/accountbalance/v1/query';
@@ -407,7 +407,7 @@ class MPESA
      * @param $Occasion -   Optional Parameter
      * @return mixed-string
      */
-    public function transactionStatus( $CommandID, $TransactionID, $IdentifierType, $Remarks, $Occasion)
+    public function status( $CommandID, $TransactionID, $IdentifierType, $Remarks, $Occasion )
     {
         if( $this -> live ){
             $url = 'https://api.safaricom.co.ke/mpesa/transactionstatus/v1/query';
@@ -566,5 +566,23 @@ class MPESA
         print_r($curl_response);
 
         return json_decode( $curl_response );
+    }
+
+    public function finish($ok = true )
+    {
+        if ( $ok ) {
+            $response = array( 
+                'ResponseCode' => 0,
+                'ResponseDesc' => 'Transaction Accepted Successfully'
+            );
+        } else{
+            $response = array( 
+                'ResponseCode' => 0,
+                'ResponseDesc' => 'Transaction Rejected'
+            );
+        }
+        
+        header( "Content-Type: application/json" );
+        echo( json_encode( $response ) );
     }
 }

@@ -17,11 +17,16 @@ A set of Libraries for integrating MPESA into Websites/Web Apps written in Vanil
 ## Installation
 Getting started with MPESA is very easy.
 * Your site/app MUST be running over https for the MPESA Instant Payment Notification (IPN) to work.
+* You actually only need these three files for the integration to work:
 
-* Download the zip from here aand extract it in your app.
+	* MPESA.php
+	* Response.php
+	* cert.cr
+
+* You can download a zip of all three from here(https://github.com/ModoPesa/mpesa-php) and extract it in your app.
 
 ## Usage
-Define some basic constantsto be used by the MPESA Class file like so:
+Define some basic constants to be used by the MPESA Class file like so:
 
 	define( 'MPESA_NAME', 'Your Awesome Business' );
 	define( 'MPESA_SHORTCODE', '123456' );
@@ -34,6 +39,7 @@ Define some basic constantsto be used by the MPESA Class file like so:
 	define( 'MPESA_VALIDATION_URL', 'https://yoursite.tld/validate' );
 
 Load the class...
+
 	`require_once( 'MPESA.php');`
 
 Then instantiate the MPESA object like so:
@@ -45,21 +51,40 @@ Or, is you are testing in a sandbox environment, like so:
 	`$mpesa = new \Safaricom\MPESA(false);`
 
 ### Customer To Business - C2B Transactions
-	`$mpesa -> c2b( $amount, $phone, $billref );`
+	`$mpesa -> c2b( $Amount, $Msisdn, $BillRefNumber, $CommandID );`
+	The last two arguments are optional. The $BillRefNumber defaults to nothing ("") while $CommandID defaults to "CustomerPayBillOnline"
 
 ### Business To Business - B2B Transactions
-	`$mpesa -> b2b( $amount, $phone, $billref );`
+	`$mpesa -> b2b( $Amount, $PartyB, $Remarks, $AccountReference, $commandID, $SenderIdentifierType, $RecieverIdentifierType );`
 
 ### Business To Customer - B2C Transactions
-	`$mpesa -> b2c( $amount, $phone, $billref );`
+	`$mpesa -> b2c( $CommandID, $Amount, $PartyB, $Remarks, $Occasion );`
+
+### Check Account Balance
+	`$mpesa -> balance( $CommandID, $IdentifierType, $Remarks );`
+	The $Remarks are optional.
+
+### Check Transaction Status
+	`$mpesa -> status( $CommandID, $TransactionID, $IdentifierType, $Remarks, $Occasion );`
+
+### Transaction Reversal
+	`$mpesa -> reverse(  $TransactionID, $Amount, $ReceiverParty, $RecieverIdentifierType, $Remarks, $Occasion );`
 
 To get responses, just call the response class at your endpoints. This utility class will handle responses from Safaricom MPESA and return them as it's properties.
 
-	`$response = new \Safaricom\Response();
+	`$response = new \Safaricom\Response($type);` 
+	where $type is the kind of request for whose response to listen for
 
 	$amount = $response -> Amount;
 	$phone = $response -> Phone;
 	You can get all other information as above`
+
+### Validating/Confirming Transactions
+	`$response = new \Safaricom\Response('validation');`
+	You can then check against all posted values, i.e $response -> Amount and validate like so:
+	`$mpesa -> finish();` or reject like so `$mpesa -> finish(false);`
+
+	If you do not wish to validate/confirm your transactions, you still need to call `$mpesa -> finish();` at your validation/confirmation endpoints
 
 ## Acknowledgements
 * MPESA and the MPESA Logo are registered trademarks of Safaricom Ltd
