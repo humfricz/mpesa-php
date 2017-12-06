@@ -1,4 +1,4 @@
-                                           _
+                                        _
 		______   ____    _________| |   _______	   _______      _______	   ______
 		|   _ \_/_   | 	|           |  |   __  \   |   ____|  /   ____|   /  __  \
 		|  | |  | |  | 	|           |  |  |  |  |  |       |  |       |  |  |  |
@@ -11,7 +11,7 @@
 				|           |
 				|___________|
 						
-# ModoPesa for MPESA
+# ModoPesa MPESA - PHP
 A set of Libraries for integrating MPESA into Websites/Web Apps written in Vanilla PHP.
 
 ## Installation
@@ -122,10 +122,12 @@ You can get all other response parameters/information as above.
 ### Validating/Confirming Transactions
 	`$response = new \Safaricom\Response('validation');`
 	
-You can then check against all posted values, i.e $response -> Amount and validate like so:
+You can then check against all posted values, if `$response -> Amount` is correct and validate like so:
+
 	`$mpesa -> finish();`
 
 Or reject like so :
+
 	`$mpesa -> finish(false);`
 
 If you do not wish to validate/confirm your transactions, you still need to call `$mpesa -> finish();` at your validation/confirmation endpoints, so MPESA is notified to process the transaction.
