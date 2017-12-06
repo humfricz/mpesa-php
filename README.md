@@ -21,17 +21,20 @@ Getting started with MPESA is very easy.
 * Download the zip from here aand extract it in your app.
 
 ## Usage
-Define some basic constants like so:
+Define some basic constantsto be used by the MPESA Class file like so:
 
-	define( 'MPESA_NAME', $this->get_option( 'business' ) );
-	define( 'MPESA_SHORTCODE', $this->get_option( 'shortcode' ) );
-	define( 'MPESA_KEY', $this->get_option( 'key' ) );
-	define( 'MPESA_SECRET', $this->get_option( 'secret' ) );
-	define( 'MPESA_PASSWORD', $this->get_option( 'password' ) );
-	define( 'MPESA_TIMEOUT_URL', $url.'/wc-api/woocommerce_api_wc_mpesa_timeout' );
-	define( 'MPESA_RESULT_URL', $url.'/wc-api/woocommerce_api_wc_mpesa' );
-	define( 'MPESA_CONFIRMATION_URL', $url.'/wc-api/woocommerce_api_wc_mpesa_confirm' );
-	define( 'MPESA_VALIDATION_URL', $url.'/wc-api/woocommerce_api_wc_mpesa_validate' );
+	define( 'MPESA_NAME', 'Your Awesome Business' );
+	define( 'MPESA_SHORTCODE', '123456' );
+	define( 'MPESA_KEY', 'bnWPihAdtqRFZiJumUtEfI2lnEmQG09d' );
+	define( 'MPESA_SECRET', 'VAdWE9ns8jGoImZW' );
+	define( 'MPESA_PASSWORD', 'MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMTcxMDA5MTAxOTMy' );
+	define( 'MPESA_TIMEOUT_URL', 'https://yoursite.tld/timeout/' );
+	define( 'MPESA_RESULT_URL', 'https://yoursite.tld/mpesa/' );
+	define( 'MPESA_CONFIRMATION_URL', 'https://yoursite.tld/confirm' );
+	define( 'MPESA_VALIDATION_URL', 'https://yoursite.tld/validate' );
+
+Load the class...
+	`require_once( 'MPESA.php');`
 
 Then instantiate the MPESA object like so:
 
