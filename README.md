@@ -51,26 +51,62 @@ Or, if you are not live yet or you are testing in a sandbox environment, pass fa
 	`$mpesa = new \Safaricom\MPESA(false);`
 
 ### Customer To Business(C2B) Transactions
-	`$mpesa -> c2b( $Amount, $Msisdn, $BillRefNumber, $CommandID );`
+	`$mpesa -> c2b( 
+		$Amount, 
+		$Msisdn, 
+		$BillRefNumber, 
+		$CommandID 
+		);`
 
 The last two arguments are optional. The `$BillRefNumber` defaults to nothing ("") while `$CommandID` defaults to "CustomerPayBillOnline"
 
 ### Business To Business(B2B) Transactions
-	`$mpesa -> b2b( $Amount, $PartyB, $Remarks, $AccountReference, $commandID, $SenderIdentifierType, $RecieverIdentifierType );`
+	`$mpesa -> b2b( 
+		$Amount, 
+		$PartyB, 
+		$Remarks, 
+		$AccountReference, 
+		$commandID, 
+		$SenderIdentifierType, 
+		$RecieverIdentifierType 
+		);`
 
 ### Business To Customer(B2C) Transactions
-	`$mpesa -> b2c( $CommandID, $Amount, $PartyB, $Remarks, $Occasion );`
+	`$mpesa -> b2c( 
+		$CommandID, 
+		$Amount, 
+		$PartyB, 
+		$Remarks, 
+		$Occasion 
+		);`
 
 ### Check Account Balance
-	`$mpesa -> balance( $CommandID, $IdentifierType, $Remarks );`
+	`$mpesa -> balance( 
+		$CommandID, 
+		$IdentifierType, 
+		$Remarks 
+		);`
 
 The `$Remarks` are optional.
 
 ### Check Transaction Status
-	`$mpesa -> status( $CommandID, $TransactionID, $IdentifierType, $Remarks, $Occasion );`
+	`$mpesa -> status( 
+		$CommandID, 
+		$TransactionID, 
+		$IdentifierType, 
+		$Remarks, 
+		$Occasion 
+		);`
 
 ### Transaction Reversal
-	`$mpesa -> reverse(  $TransactionID, $Amount, $ReceiverParty, $RecieverIdentifierType, $Remarks, $Occasion );`
+	`$mpesa -> reverse( 
+		$TransactionID, 
+		$Amount, 
+		$ReceiverParty, 
+		$RecieverIdentifierType, 
+		$Remarks, 
+		$Occasion 
+		);`
 
 To get responses, just call the response class at your endpoints. This utility class will handle responses from Safaricom MPESA and return the parameters as its properties.
 
