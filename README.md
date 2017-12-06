@@ -1,7 +1,7 @@
                                        _
 		______   ____    _________| |   _______	   _______      _______	   ______
 		|   _ \_/_   | 	|           |  |   __  \   |   ____|  /   ____|   /  __  \
-		|  | |  | |  | 	|           |  |  |  |  |  |       |  |       |  |  |  |
+		|  | |  | |  | 	|           |  |  |  |  |  |  |       |  |       |  |  |
 		|  | |  | |  | 	| /\	/ \ |  |  |__|  |  |  |____   |  |____   |  |__|  |
 		|  | |  | |  | 	|/  \  /   \|  |   ____/   |   ____|  |____   |  |   __   |
 		|  | |  | |  | 	|\   \/	   /|  |  |        |  |            |  |  |  |  |  |
@@ -13,10 +13,10 @@
 						
 # ModoPesa MPESA - PHP
 A simple and concise library for integrating MPESA into Websites/Web Apps written in Vanilla PHP.
-Based on Daraja - the new MPESA API(https://developer.safaricom.co.ke/docs/)
+Based on Daraja - the new MPESA API - https://developer.safaricom.co.ke/docs/
 
 ## Installation
-Getting started with theis MPESA is very easy.
+Getting started with this MPESA library is very easy.
 * Your site/app MUST be running over https for the MPESA Instant Payment Notification (IPN) to work.
 * Head over to Daraja - https://developer.safaricom.co.ke/docs/#creating-a-sandbox-app and create an app.
 * You actually only need these three files for the integration to work:
