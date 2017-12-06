@@ -18,18 +18,19 @@ Based on Daraja - the new MPESA API - https://developer.safaricom.co.ke/docs/
 ## Installation
 Getting started with this MPESA library is very easy.
 * Your site/app MUST be running over https for the MPESA Instant Payment Notification (IPN) to work.
-* Head over to Daraja - https://developer.safaricom.co.ke/docs/#creating-a-sandbox-app and create an app.
-* You actually only need these three files for the integration to work:
+* If you have not created a Daraja app, head over to https://developer.safaricom.co.ke/docs/#creating-a-sandbox-app and create one.
+* These three files are all you need in your app/website for the integration:
 
 	* MPESA.php
 	* Response.php
 	* cert.cr
 
-* You can download a zip of all three from https://github.com/ModoPesa/mpesa-php and extract it somewhere/anywhere in your app directory. Make sure all three files are in the same directory.
+* You can download a zip of all file (including the license and this README file) from https://github.com/ModoPesa/mpesa-php and extract it somewhere/anywhere in your app directory. Make sure all three files are in the same directory.
 
 ## Usage
-Define some basic constants required by the MPESA Class file like so:
+Define some basic constants, either in your app/website's configuration or at the top of the script including the MPESA Class file like so:
 
+	<?php
 	define( 'MPESA_NAME', 'Your Awesome Business' );
 	define( 'MPESA_SHORTCODE', '123456' );
 	define( 'MPESA_KEY', 'Daraja App Key' );
@@ -42,17 +43,21 @@ Define some basic constants required by the MPESA Class file like so:
 
 Load the class...
 
+	<?php
 	require_once( 'MPESA.php');
 
 Then instantiate the MPESA object like so:
 
+	<?php
 	$mpesa = new \Safaricom\MPESA();
 
 Or, if you are not live yet or you are testing in a sandbox environment, pass `false` as an argument when instantiating the MPESA object, like so:
 
+	<?php
 	$mpesa = new \Safaricom\MPESA(false);
 
 ### Customer To Business(C2B) Transactions
+	<?php
 	$mpesa -> c2b( 
 		$Amount, 
 		$Msisdn, 
@@ -63,6 +68,7 @@ Or, if you are not live yet or you are testing in a sandbox environment, pass `f
 The last two arguments are optional. The `$BillRefNumber` defaults to nothing (`""`) while `$CommandID` defaults to "CustomerPayBillOnline"
 
 ### Business To Business(B2B) Transactions
+	<?php
 	$mpesa -> b2b( 
 		$Amount, 
 		$PartyB, 
@@ -74,6 +80,7 @@ The last two arguments are optional. The `$BillRefNumber` defaults to nothing (`
 		);
 
 ### Business To Customer(B2C) Transactions
+	<?php
 	$mpesa -> b2c( 
 		$CommandID, 
 		$Amount, 
@@ -83,6 +90,7 @@ The last two arguments are optional. The `$BillRefNumber` defaults to nothing (`
 		);
 
 ### Check Account Balance
+	<?php
 	$mpesa -> balance( 
 		$CommandID, 
 		$IdentifierType, 
@@ -92,6 +100,7 @@ The last two arguments are optional. The `$BillRefNumber` defaults to nothing (`
 The `$Remarks` are optional.
 
 ### Check Transaction Status
+	<?php
 	$mpesa -> status( 
 		$CommandID, 
 		$TransactionID, 
@@ -101,6 +110,7 @@ The `$Remarks` are optional.
 		);
 
 ### Transaction Reversal
+	<?php
 	$mpesa -> reverse( 
 		$TransactionID, 
 		$Amount, 
@@ -111,24 +121,29 @@ The `$Remarks` are optional.
 		);
 
 ### Process Responses
-This utility class will handle responses from Safaricom MPESA sent to your endpoints and return the parameters as its properties. Just use this code at your endpoint, where `$type` is the kind of request for whose response to listen for. 
+This response utility class `Safaricom\Response($type)` will handle responses from Safaricom MPESA sent to your endpoints and return the parameters as its properties. Just use this code at your endpoint, where `$type` is the kind of request for whose response to listen for. 
 
+	<?php
 	$response = new \Safaricom\Response($type);
 
 Your `$response` object will hold, as properties, all the parameters, which you can retrieve like so:
 
+	<?php
 	$amount = $response -> Amount;
 	$phone = $response -> Phone;
 
 ### Validating/Confirming Transactions
+	<?php
 	$response = new \Safaricom\Response('validation');
 	
 You can then check against all posted values (e.g if `$response -> Amount` is correct/expected amount) and validate like so:
 
+	<?php
 	$mpesa -> finish();
 
 Or reject like so :
 
+	<?php
 	$mpesa -> finish(false);
 
 Even if you do not wish to validate/confirm your transactions, you still need to call `$mpesa -> finish();` at your validation/confirmation endpoints, so MPESA is notified to process the transaction.
