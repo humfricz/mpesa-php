@@ -14,7 +14,7 @@ namespace Safaricom;
  */
 class Response
 {
-    //general
+    //general status
     public $ResultCode;
     public $ResultDesc;
     public $ResultType;
