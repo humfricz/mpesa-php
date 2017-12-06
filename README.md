@@ -123,7 +123,7 @@ Your `$response` object will hold, as properties, all the parameters, which you 
 ### Validating/Confirming Transactions
 	$response = new \Safaricom\Response('validation');
 	
-You can then check against all posted values, if `$response -> Amount` is correct and validate like so:
+You can then check against all posted values (e.g if `$response -> Amount` is correct/expected amount) and validate like so:
 
 	$mpesa -> finish();
 
@@ -131,7 +131,7 @@ Or reject like so :
 
 	$mpesa -> finish(false);
 
-If you do not wish to validate/confirm your transactions, you still need to call `$mpesa -> finish();` at your validation/confirmation endpoints, so MPESA is notified to process the transaction.
+Even if you do not wish to validate/confirm your transactions, you still need to call `$mpesa -> finish();` at your validation/confirmation endpoints, so MPESA is notified to process the transaction.
 
 ## Acknowledgements
 * MPESA and the MPESA Logo are registered trademarks of Safaricom Ltd - https://safaricom.co.ke

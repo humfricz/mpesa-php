@@ -1,7 +1,8 @@
 ;<?php
 /**
-* @package MPESA Inside
-* @version 0.17.11
+* @package ModoPesa MPESA - PHP
+* @subpackage Main MPESA Class
+* @version 0.17.12
 * @author Mauko Maunde < hi@mauko.co.ke >
 * @see https://developer.safaricom.co.ke/docs
 **/
@@ -581,7 +582,7 @@ class MPESA
                 'ResponseDesc' => 'Transaction Rejected'
             );
         }
-        
+
         header( "Content-Type: application/json" );
         echo( json_encode( $response ) );
     }
