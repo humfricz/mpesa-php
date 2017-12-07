@@ -1,4 +1,4 @@
-;<?php
+<?php
 /**
 * @package ModoPesa MPESA - PHP
 * @subpackage Main MPESA Class
@@ -427,7 +427,8 @@ class MPESA
         curl_setopt( $curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Authorization:Bearer '.$token));
 
         $Initiator = is_null( $Initiator ) ? $this -> username : $Initiator;
-        $IdentifierType = is_null( $IdentifierType ) ? $this -> type : $IdentifierType
+        $IdentifierType = is_null( $IdentifierType ) ? $this -> type : $IdentifierType;
+
         $curl_post_data = array(
             'Initiator' => $Initiator,
             'SecurityCredential' => $this -> securityCredential(),

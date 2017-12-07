@@ -49,10 +49,10 @@ Load and instantiate the MPESA object like so:
 	require_once( 'MPESA.php');
 	$mpesa = new \Safaricom\MPESA();
 
-Or, if you are not live yet or you are testing in a sandbox environment, pass `false` as an argument when instantiating the MPESA object, like so:
+Or, if you are not live yet or you are testing in a sandbox environment, pass `false` and the test credentials public key `$publickey` as arguments when instantiating the MPESA object, like so:
 
 	<?php
-	$mpesa = new \Safaricom\MPESA(false);
+	$mpesa = new \Safaricom\MPESA(false, $publickey);
 
 ### Customer To Business(C2B) Transactions
 	<?php

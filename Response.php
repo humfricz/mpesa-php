@@ -55,7 +55,8 @@ class Response
         $response = json_decode( $rawresponse, true );
         $result = $response['Result'];
 
-        if ( $type = "reversal" ) {
+        if ( $type = "reversal" ) 
+        {
             $this -> ResultType = $result['ResultType'];
             $this -> ResultCode = $result['ResultCode'];
             $this -> ResultDesc = $result['ResultDesc'];
@@ -63,7 +64,8 @@ class Response
             $this -> ConversationID = $result['ConversationID'];
             $this -> TransactionID = $result['TransactionID'];
             $this -> QueueTimeoutURL = $result['ReferenceData']['ReferenceItem']['Value'];
-        } elseif ( $type = "b2c" ) {
+        } elseif ( $type = "b2c" ) 
+        {
             $this -> ResultType = $result['ResultType'];
             $this -> ResultCode = $result['ResultCode'];
             $this -> ResultDesc = $result['ResultDesc'];
@@ -81,7 +83,8 @@ class Response
             $this -> B2CRecipientIsRegisteredCustomer = $resultparam[6]['Value'];
             $this -> referenceitemkey = $result['ReferenceData']['ReferenceItem']['Key'];
             $this -> referenceitemvalue = $result['ReferenceData']['ReferenceItem']['Value'];
-        } elseif ( $type = "b2b" ) {
+        } elseif ( $type = "b2b" ) 
+        {
             $this -> ResultType = $result['ResultType'];
             $this -> ResultCode = $result['ResultCode'];
             $this -> ResultDesc = $result['ResultDesc'];
@@ -101,7 +104,8 @@ class Response
             $this -> BillReferenceNumber = $result['ReferenceData']['ReferenceItem'][0]['Value'];
             $this -> QueueTimeoutURL = $result['ReferenceData']['ReferenceItem'][1]['Value'];
             $this -> Occassion = $result['ReferenceData']['ReferenceItem'][2]['Value'];
-        } elseif ( $type = "c2b" ) {
+        } elseif ( $type = "c2b" ) 
+        {
             $this -> ResultType = $result['ResultType'];
             $this -> ResultCode = $result['ResultCode'];
             $this -> ResultDesc = $result['ResultDesc'];
@@ -119,14 +123,16 @@ class Response
             $this -> B2CRecipientIsRegisteredCustomer = $resultparam[6]['Value'];
             $this -> BillReferenceNumber = $result['ReferenceData']['ReferenceItem'][0]['Value'];
             $this -> QueueTimeoutURL = $result['ReferenceData']['ReferenceItem'][1]['Value'];
-        } elseif ( $type = "stkpush" ) {
+        } elseif ( $type = "stkpush" ) 
+        {
             $this -> ResponseCode = $result['ResponseCode'];
             $this -> ResponseDescription = $result['ResponseDescription'];
             $this -> MerchantRequestID = $result['MerchantRequestID'];
             $this -> CheckoutRequestID = $result['CheckoutRequestID'];
             $this -> ResultCode = $result['ResultCode'];
             $this -> ResultDesc = $result['ResultDesc'];
-        } elseif ( $type = "balance" ) {
+        } elseif ( $type = "balance" ) 
+        {
             $this -> ResultType = $result['ResultType'];
             $this -> ResultCode = $result['ResultCode'];
             $this -> ResultDesc = $result['ResultDesc'];
@@ -139,7 +145,8 @@ class Response
             $this -> BOCompletedTime = $resultparam[1]['Value'];
 
             $this -> QueueTimeoutURL = $result['ReferenceData']['ReferenceItem']['Value'];
-        } elseif ( $type = "status" ) {
+        } elseif ( $type = "status" ) 
+        {
             $this -> ResultType = $result['ResultType'];
             $this -> ResultCode = $result['ResultCode'];
             $this -> ResultDesc = $result['ResultDesc'];
@@ -163,7 +170,8 @@ class Response
             $this -> DebitPartyName = $resultparam[12]['Value'];
 
             $this -> Occassion = $result['ReferenceData']['ReferenceItem']['Value'];
-        } elseif ( $type = "validation" ) {
+        } elseif ( $type = "validation" ) 
+        {
             $this -> TransactionType = $result['TransactionType'];
             $this -> TransID = $result['TransID'];
             $this -> TransTime = $result['TransTime'];
@@ -177,7 +185,8 @@ class Response
             $this -> FirstName = $result['FirstName'];
             $this -> MiddleName = $result['MiddleName'];
             $this -> LastName = $result['LastName'];
-        } elseif ( $type = "confirmation" ) {
+        } elseif ( $type = "confirmation" ) 
+        {
             $this -> TransactionType = $result['TransactionType'];
             $this -> TransID = $result['TransID'];
             $this -> TransTime = $result['TransTime'];
@@ -191,7 +200,8 @@ class Response
             $this -> FirstName = $result['FirstName'];
             $this -> MiddleName = $result['MiddleName'];
             $this -> LastName = $result['LastName'];
-        } elseif ( $type = "paybill" ) {
+        } elseif ( $type = "paybill" ) 
+        {
             $result = $response['Body']['stkCallback'];
             $this -> MerchantRequestID = $result['MerchantRequestID'];
             $this -> CheckoutRequestID = $result['CheckoutRequestID'];
