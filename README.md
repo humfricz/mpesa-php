@@ -24,7 +24,7 @@ Getting started with this MPESA library is very easy.
 	* MPESA.php
 	* Response.php
 
-* You can download a zip of all files ( including the license and this README file ) from <a href="https://github.com/ModoPesa/mpesa-php/archive/v0.17.12.07.zip">here</a> and extract it somewhere/anywhere in your app directory. Make sure all files are extracted in the same directory.
+* You can download a zip of all files ( including the license and this README file ) from <a href="https://github.com/ModoPesa/mpesa-php/archive/v0.17.12.23.zip">here</a> and extract it somewhere/anywhere in your app directory. Make sure all files are extracted in the same directory.
 
 ## Usage
 Define some basic constants, either in your app/website's configuration or at the top of the script including the MPESA Class file like so:
