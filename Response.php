@@ -1,17 +1,16 @@
 <?php
 /**
 * @package ModoPesa MPESA - PHP
-* @subpackage Response Utility Class
+* @subpackage MPESA Response Utility Class
 * @version 0.17.12
 * @author Mauko Maunde < hi@mauko.co.ke >
-* @see https://developer.safaricom.co.ke/docs
+* @link https://developer.safaricom.co.ke/docs
 **/
-
 namespace Safaricom;
 
 /**
  * Safaricom MPESA Response Data object utility class
- * @link https://developer.safaricom.co.ke/docs
+ * @see https://developer.safaricom.co.ke/docs
  */
 class Response
 {
