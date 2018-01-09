@@ -19,12 +19,28 @@ Based on Daraja - the new <a href="https://developer.safaricom.co.ke/docs/">MPES
 Getting started with this MPESA library is very easy.
 * Your site/app MUST be running over https for the MPESA Instant Payment Notification (IPN) to work.
 * If you have not created a Daraja app, head over to <a href="https://developer.safaricom.co.ke/docs/#creating-a-sandbox-app">Daraja</a> and create one.
+
+### Install Manually
+
 * These two files are all you need in your app/website for the integration:
 
 	* MPESA.php
 	* Response.php
 
 * You can download a zip of all files ( including the license and this README file ) from <a href="https://github.com/ModoPesa/mpesa-php/archive/v0.17.12.23.zip">here</a> and extract it somewhere/anywhere in your app directory. Make sure all files are extracted in the same directory.
+
+### Install Via Composer
+Edit your composer.json file to include the following:
+
+```
+    {
+       "require": {
+           "qobo/mpesa": "dev-master"
+       }
+    }
+```
+
+Run `composer install` to pull the latest version of this library.
 
 ## Usage
 Define some basic constants, either in your app/website's configuration or at the top of the script including the MPESA Class file like so:
@@ -69,13 +85,15 @@ Endpoints should be properly validated to make sure that they contain the port, 
 Once all constants have been set, you can now load and instantiate the MPESA object like so:
 
 	<?php
-	require_once( 'MPESA.php' );
-	$mpesa = new \Safaricom\MPESA();
+	use Safaricom
+	require_once( 'src/MPESA.php' );
+
+	$mpesa = new MPESA();
 
 Or, if you are not live yet or you are testing in a sandbox environment, pass `false` and the test credentials public key `$publickey` as arguments when instantiating the MPESA object, like so:
 
 	<?php
-	$mpesa = new \Safaricom\MPESA( false, $publickey );
+	$mpesa = new MPESA( false, $publickey );
 
 ### Application Programming Interfaces ( APIs )
 #### Customer To Business(C2B) Transactions
@@ -88,6 +106,18 @@ Or, if you are not live yet or you are testing in a sandbox environment, pass `f
 	);
 
 The last two arguments are optional. The `$BillRefNumber` defaults to a random 6-digit number while `$CommandID` defaults to "CustomerPayBillOnline"
+
+#### Online ( Customer ) Checkout
+	<?php
+	$mpesa -> checkout( 
+		$Amount, 
+		$PhoneNumber, 
+		$AccountReference, 
+		$TransactionDesc, 
+		$Remarks
+	);
+
+The last three arguments are optional.
 
 #### Business To Business(B2B) Transactions
 	<?php
@@ -146,7 +176,9 @@ The `$Remarks` are optional.
 The response utility class `Safaricom\Response()` will handle all responses from Safaricom MPESA sent to your endpoints and return the parameters as its properties. Make sure the response utility class is loaded i.e include the Response.php file `require_once( 'path/to/Response.php' )`. Instantiate the response object at your endpoint like so:
 
 	<?php
-	$response = new \Safaricom\Response( $type );
+	use Safaricom;
+	require_once( 'src/Response.php' );
+	$response = new Response( $type );
 
 where `$type` is the kind of request for whose response to listen for.
 
@@ -186,9 +218,9 @@ Even if you do not wish to validate/confirm your transactions, you still need to
 
 ## Contributors
 * <a href="https://mauko.co.ke/">Mauko</a>
-* <a href="">Muga</a>
-* <a href="">Mecha</a>
-* <a href="">Chenja</a>
+* <a href="#">Muga</a>
+* <a href="#">Mecha</a>
+* <a href="#">Chenja</a>
 
 ## Licensing
 This project is released under the MIT License( LICENSE )

@@ -1,0 +1,23 @@
+{
+    "name": "qobo/mpesa",
+    "description": "A simple and concise library for integrating MPESA into Websites/Web Apps written in Vanilla PHP. Based on Daraja - the new MPESA API",
+    "type": "library",
+    "homepage":"https://qobo.co.ke",
+    "keywords": ["mpesa", "payments", "gateways", "ecommerce"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mauko Maunde",
+            "email": "hi@mauko.co.ke"
+        }
+    ],
+    "support":{
+        "email":"mpesa@payments.qobo.co.ke"
+    },
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "classmap": ["src/MPESA.php", "src/Response.php"]
+    }
+}
