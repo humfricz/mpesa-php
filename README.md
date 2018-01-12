@@ -35,7 +35,7 @@ Edit your composer.json file to include the following:
 ```
     {
        "require": {
-           "qobo/mpesa": "dev-master"
+           "mauko/mpesa": "dev-master"
        }
     }
 ```
@@ -45,40 +45,27 @@ Run `composer install` to pull the latest version of this library.
 ## Usage
 Define some basic constants, either in your app/website's configuration or at the top of the script including the MPESA Class file like so:
 
-	<?php
-	define( 'MPESA_NAME', 'Your Awesome Business' );
-	define( 'MPESA_SHORTCODE', '123456' );
-	define( 'MPESA_ID_TYPE', 'MSISDN|Till Number|Shortcode' );
-	define( 'MPESA_KEY', 'Daraja App Key' );
-	define( 'MPESA_SECRET', 'Daraja App Secret' );
-	define( 'MPESA_USERNAME', 'Your MPESA Web Portal Username' );
-	define( 'MPESA_PASSWORD', 'Your MPESA Web Portal Password' );
-	define( 'MPESA_CALLBACK_URL', 'https://yoursite.tld/mpesa/callback/' );
-	define( 'MPESA_TIMEOUT_URL', 'https://yoursite.tld/mpesa/timeout/' );
-	define( 'MPESA_RESULT_URL', 'https://yoursite.tld/mpesa/result/' );
-	define( 'MPESA_CONFIRMATION_URL', 'https://yoursite.tld/mpesa/confirm/' );
-	define( 'MPESA_VALIDATION_URL', 'https://yoursite.tld/mpesa/validate/' );
-
-For PHP 7+ users, you could use something like this instead:
+Identifiers are as follows:
+	1 -> Shortcode
+	2 -> Till Number
+	4 -> MSISDN
 
 	<?php
-	define ( 
-		'MPESA_CONFIG', 
-		[
-			'NAME' => 'Your Awesome Business', 
-			'SHORTCODE' => '123456', 
-			'ID_TYPE' => 'MSISDN|Till Number|Shortcode', 
-			'KEY' => 'Daraja App Key', 
-			'SECRET' => 'Daraja App Secret', 
-			'USERNAME' => 'Your MPESA Web Portal Username', 
-			'PASSWORD' => 'Your MPESA Web Portal Password', 
-			'CALLBACK_URL' => 'https://yoursite.tld/mpesa/callback/', 
-			'TIMEOUT_URL' => 'https://yoursite.tld/mpesa/timeout/', 
-			'RESULT_URL' => 'https://yoursite.tld/mpesa/result/', 
-			'CONFIRMATION_URL' => 'https://yoursite.tld/mpesa/confirm/', 
-			'VALIDATION_URL' => 'https://yoursite.tld/mpesa/validate/' 
-		] 
-	);
+	$config = [];
+	$config['live'] = "yes|no";
+	$config['name'] = 'Your Awesome Business'; 
+	$config['shortcode'] = '123456';
+	$config['type'] = 1(MSISDN)|2(Till Number)|4(Shortcode); 
+	$config['key'] = 'Daraja App Consumer Key';
+	$config['secret'] = 'Daraja App Consumer Secret'; 
+	$config['username'] = 'Your MPESA Web Portal Username'; 
+	$config['password'] = 'Your MPESA Web Portal Password'; 
+	$config['passkey'] = 'MPESA Online Pass Key';
+	$config['callback_url'] = 'https://yoursite.tld/mpesa/callback/';
+	$config['timeout_url'] = 'https://yoursite.tld/mpesa/timeout/';
+	$config['result_url'] = 'https://yoursite.tld/mpesa/result/';
+	$config['confirmation_url'] = 'https://yoursite.tld/mpesa/confirm/';
+	$config['validation_url'] = 'https://yoursite.tld/mpesa/validate/';
 
 Endpoints should be properly validated to make sure that they contain the port, URI and domain name or publicly available IP.
 
@@ -88,24 +75,19 @@ Once all constants have been set, you can now load and instantiate the MPESA obj
 	use Safaricom
 	require_once( 'src/MPESA.php' );
 
-	$mpesa = new MPESA();
-
-Or, if you are not live yet or you are testing in a sandbox environment, pass `false` and the test credentials public key `$publickey` as arguments when instantiating the MPESA object, like so:
-
-	<?php
-	$mpesa = new MPESA( false, $publickey );
+	$mpesa = new MPESA( $config );
 
 ### Application Programming Interfaces ( APIs )
 #### Customer To Business(C2B) Transactions
 	<?php
 	$mpesa -> c2b( 
 		$Amount, 
-		$Msisdn, 
-		$BillRefNumber, 
+		$PhoneNumber, 
+		$BillReferenceNumber, 
 		$CommandID 
 	);
 
-The last two arguments are optional. The `$BillRefNumber` defaults to a random 6-digit number while `$CommandID` defaults to "CustomerPayBillOnline"
+The last two arguments are optional. The `$BillReferenceNumber` defaults to a random 6-digit number while `$CommandID` defaults to "CustomerPayBillOnline"
 
 #### Online ( Customer ) Checkout
 	<?php
@@ -113,8 +95,8 @@ The last two arguments are optional. The `$BillRefNumber` defaults to a random 6
 		$Amount, 
 		$PhoneNumber, 
 		$AccountReference, 
-		$TransactionDesc, 
-		$Remarks
+		$TransactionDescription, 
+		$ExtraRemarks
 	);
 
 The last three arguments are optional.
@@ -123,43 +105,43 @@ The last three arguments are optional.
 	<?php
 	$mpesa -> b2b( 
 		$Amount, 
-		$PartyB, 
-		$Remarks, 
+		$ReceivingPartyShortcode, 
 		$AccountReference, 
-		$commandID, 
-		$SenderIdentifierType, 
+		$commandID,
 		$RecieverIdentifierType 
+		$ExtraRemarks, 
 	);
 
 #### Business To Customer(B2C) Transactions
 	<?php
-	$mpesa -> b2c( 
-		$CommandID, 
+	$mpesa -> b2c(
 		$Amount, 
-		$PartyB, 
-		$Remarks, 
+		$ReceivingPartyShortcode
+		$CommandID,
 		$Occasion 
+		$Remarks, 
 	);
 
 #### Account Balance Check
 	<?php
 	$mpesa -> balance( 
-		$CommandID, 
-		$IdentifierType, 
+		$CommandID,
 		$Remarks 
 	);
 
-The `$Remarks` are optional.
+Both arguments are optional. `$CommandID` defaults to "AccountBalanceRequest" while `$Remarks` defaults to "Account Balance Request"
 
 #### Transaction Status Check
 	<?php
 	$mpesa -> status( 
-		$CommandID, 
 		$TransactionID, 
+		$CommandID, 
 		$IdentifierType, 
 		$Remarks, 
 		$Occasion 
 	);
+
+The last three arguments are optional `$CommandID` defaults to "TransactionStatusQuery", `$Remarks` defaults to "Transaction Status Query" and `$Occasion` to ""
 
 #### Transaction Reversal
 	<?php
@@ -167,18 +149,17 @@ The `$Remarks` are optional.
 		$TransactionID, 
 		$Amount, 
 		$ReceiverParty, 
-		$RecieverIdentifierType, 
-		$Remarks, 
-		$Occasion 
+		$RecieverIdentifierType,
+		$Occasion, 
+		$Remarks
 	);
 
 ### Response Processing
-The response utility class `Safaricom\Response()` will handle all responses from Safaricom MPESA sent to your endpoints and return the parameters as its properties. Make sure the response utility class is loaded i.e include the Response.php file `require_once( 'path/to/Response.php' )`. Instantiate the response object at your endpoint like so:
+The response utility class `Safaricom\Response()` will handle all responses from Safaricom MPESA sent to your endpoints and return the parameters as its properties. Make sure the response utility class is loaded i.e include the Response.php file and instantiate the response object at your endpoint like so:
 
 	<?php
-	use Safaricom;
 	require_once( 'src/Response.php' );
-	$response = new Response( $type );
+	$response = new \Safaricom\Response( $type );
 
 where `$type` is the kind of request for whose response to listen for.
 
@@ -204,7 +185,7 @@ Or;
 You can then check against all posted values ( e.g if `$response -> Amount` is the correct/expected amount ) and allow the transaction to proceed like so:
 
 	<?php
-	$mpesa -> finish();
+	$mpesa -> proceed();
 
 Or reject it like so :
 

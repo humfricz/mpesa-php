@@ -15,6 +15,7 @@ namespace Safaricom;
 class Response
 {
     private $response;
+    
     public $responseCode;
     public $responseDescription;
 
@@ -102,7 +103,6 @@ class Response
         $this -> chargesPaidAccountAvailableFunds = $this -> response ->  Result -> ResultParameters -> ResultParameter[6] -> Value;
         $this -> recipientIsRegisteredCustomer = $this -> response ->  Result -> ResultParameters -> ResultParameter[7] -> Value;
     }
-
     /**
      * Sets the response parameters for the B2C request callback
      */
